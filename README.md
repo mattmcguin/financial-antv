@@ -1,2 +1,2 @@
 # financial-antv
-Using AntV to visual financial data
+Using AntV to visualize financial data
