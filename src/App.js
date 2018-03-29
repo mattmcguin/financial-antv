@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { Chart, Geom, Axis, Tooltip } from "bizcharts";
+import { G2, Chart, Geom, Axis, Tooltip } from "bizcharts";
 
 const AppContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  background: #1F1F1F;
+  height: 100%;
+  width: 100%;
 `;
 
 const InputWrapper = styled.div`
@@ -28,7 +31,7 @@ class App extends Component {
     await axios
       .get(
         "https://api.intrinio.com/prices?identifier=" +
-          this.state.ticker.toUpperCase(),
+        this.state.ticker.toUpperCase(),
         {
           auth: {
             username: "871438f1f58cb1b4af847325a8122c27",
@@ -40,6 +43,9 @@ class App extends Component {
   };
 
   render() {
+    // Switch theme to Dark
+    G2.Global.setTheme('dark');
+
     // Data Source
     const { data } = this.state.data;
 
@@ -62,13 +68,15 @@ class App extends Component {
             Get Chart!
           </Button>
         </InputWrapper>
-        <Chart width={1200} height={600} data={data} scale={cols}>
-          <Axis name="date" />
-          <Axis name="close" />
-          <Tooltip />
-          <Geom type="line" position="date*close" />
-        </Chart>
-      </AppContainer>
+        {data &&
+          <Chart width={1200} height={600} data={data} scale={cols}>
+            <Axis name="date" />
+            <Axis name="close" />
+            <Tooltip />
+            <Geom type="line" position="date*close" />
+          </Chart>
+        }
+      </AppContainer >
     );
   }
 }
